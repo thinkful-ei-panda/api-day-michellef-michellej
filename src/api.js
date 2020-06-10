@@ -27,7 +27,7 @@ function updateItem(id, { name }) {
 
   return fetch(`${baseUrl}/items/${id}`, {
     'method': 'PATCH',
-    'header': {
+    'headers': {
       'Content-Type': 'application/json'
     },
     'body': updateData
