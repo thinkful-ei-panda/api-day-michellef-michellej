@@ -100,13 +100,14 @@ const handleEditShoppingItemSubmit = function () {
 const handleItemCheckClicked = function () {
   $('.js-shopping-list').on('click', '.js-item-toggle', event => {
     const id = getItemIdFromElement(event.currentTarget);
-    // store.findAndToggleChecked(id);
+    const item = store.findById(id);
+
     api.updateItem(id, { checked: !item.checked })
       .then(() => {
         store.findAndUpdate(id, { checked: !item.checked });
         render();
       });
-  }
+  });
 };
 
 const handleToggleFilterClick = function () {
