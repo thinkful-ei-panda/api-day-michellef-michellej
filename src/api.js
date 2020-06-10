@@ -34,8 +34,18 @@ function updateItem(id, { name }) {
   });
 }
 
+function deleteItem(id) {
+  return fetch(`${baseUrl}/items/${id}`, {
+    'method': 'DELETE',
+    'headers': {
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
 export default {
   getItems,
   createItem,
-  updateItem
+  updateItem,
+  deleteItem
 };
