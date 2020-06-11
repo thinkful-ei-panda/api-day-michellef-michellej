@@ -1,17 +1,36 @@
+import store from "./store";
+
 const baseUrl = 'https://thinkful-list-api.herokuapp.com/michelles';
 
-function getItems() {
-  return fetch(`${baseUrl}/items`);
+function listApiFetch (...args) {
+  let error = false;
+  return fetch(...args)
+    .then(response => {
+      if (!response.ok) {
+        error = {code: response.status};
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (error) {
+        error.message = data.message;
+        return Promise.reject(error);
+      }
+      return data
+    })
+}
 
-  // return Promise.resolve('A successful response!');
+
+function getItems() {
+  return listApiFetch(`${baseUrl}/items`);
 }
 
 function createItem(name) {
-  let newItem = JSON.stringify({
+  const newItem = JSON.stringify({
     name: name
   });
 
-  return fetch(`${baseUrl}/items`, {
+  return listApiFetch(`${baseUrl}/items`, {
     'method': 'POST',
     'headers': {
       'Content-Type': 'application/json'
@@ -20,32 +39,31 @@ function createItem(name) {
   });
 }
 
-function updateItem(id, { name }) {
-  let updateData = JSON.stringify({
-    name: name
-  });
+function updateItem(id, updateData) {
+  const updatedData = JSON.stringify(updateData);
 
-  return fetch(`${baseUrl}/items/${id}`, {
+  return listApiFetch(`${baseUrl}/items/${id}`, {
     'method': 'PATCH',
     'headers': {
       'Content-Type': 'application/json'
     },
-    'body': updateData
+    'body': updatedData
   });
 }
 
 function deleteItem(id) {
-  return fetch(`${baseUrl}/items/${id}`, {
+  return listApiFetch(`${baseUrl}/items/${id}`, {
     'method': 'DELETE',
     'headers': {
       'Content-Type': 'application/json'
     }
-  });
+  })
 }
 
 export default {
   getItems,
   createItem,
   updateItem,
-  deleteItem
+  deleteItem,
+  listApiFetch
 };

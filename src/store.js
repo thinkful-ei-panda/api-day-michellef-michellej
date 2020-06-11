@@ -1,7 +1,6 @@
-// import item from './item';
-
 const items = [];
 let hideCheckeditems = false;
+let error = "";
 
 const findById = function (id) {
   return this.items.find(currentItem => currentItem.id === id);
@@ -12,14 +11,9 @@ const addItem = function (name) {
 };
 
 const findAndUpdate = function (id, newData) {
-  let updateItem = this.items.find(item => item.id === id);
-  Object.assign(updateItem, newData);
+  const updatedItem = this.items.find(item => item.id === id);
+  Object.assign(updatedItem, newData);
 };
-
-// const findAndDelete = function (id) {
-//   const itemDelete = this.items.findIndex(id === item.id);
-//   this.items.splice(itemDelete, 1);
-// };
 
 const findAndDelete = function (id) {
   this.items = this.items.filter(currentItem => currentItem.id !== id);
