@@ -106,7 +106,7 @@ const handleItemCheckClicked = function () {
         store.findAndUpdate(id, { checked: !item.checked });
         render();
       });
-  }
+  });
 };
 
 const handleToggleFilterClick = function () {
